@@ -84,13 +84,44 @@ function redrawTilemap() {
     }
   }
 }
-
-gridCanvas.addEventListener("click", (e) => {
+gridCanvas.addEventListener("mouseup", (e) => {
   const coordX = Math.trunc(e.offsetX / tileSize);
   const coordY = Math.trunc(e.offsetY / tileSize);
 
   tilemap[coordX][coordY] = currentTile;
   redrawTilemap();
+});
+
+gridCanvas.addEventListener("mousedown", (e) => {
+  const coordX = Math.trunc(e.offsetX / tileSize);
+  const coordY = Math.trunc(e.offsetY / tileSize);
+  tilemap[coordX][coordY] = currentTile;
+  drawTexture(
+    coordX,
+    coordY,
+    gridCtx,
+    currentTile,
+    gridCanvas.width / numTiles,
+    gridCanvas.height / numTiles,
+    tileSize,
+  );
+});
+const LEFT_BUTTON = 1;
+gridCanvas.addEventListener("mousemove", (e) => {
+  if (e.buttons == LEFT_BUTTON) {
+    const coordX = Math.trunc(e.offsetX / tileSize);
+    const coordY = Math.trunc(e.offsetY / tileSize);
+    tilemap[coordX][coordY] = currentTile;
+    drawTexture(
+      coordX,
+      coordY,
+      gridCtx,
+      currentTile,
+      gridCanvas.width / numTiles,
+      gridCanvas.height / numTiles,
+      tileSize,
+    );
+  }
 });
 
 // ----- Interacting with the selectable tilemap -----
